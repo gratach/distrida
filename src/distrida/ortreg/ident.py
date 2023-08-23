@@ -1,9 +1,9 @@
-from .artwrap import Artwrap
-from .ding import Ding
+from .artwrap import Kindwrap
+from .ding import Thing
 from .unbek import _UnbekMach
 from .finding import finDing
 
-class _Ident(Ding):
+class _Ident(Thing):
     kenn = "ai"
     def _lade(self, json):
         self._log = json["log"]
@@ -27,7 +27,7 @@ class _Ident(Ding):
         return True
     def mach(orts, art, kennungen = []):
         return {"log":[{"typ" : "+", "inh" : {"kenn" : x}} for x in kenn]}
-Ident = Artwrap(_Ident) 
+Ident = Kindwrap(_Ident) 
 
 def meineIdents(weak):
     r = []

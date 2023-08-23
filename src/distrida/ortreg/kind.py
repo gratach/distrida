@@ -1,14 +1,14 @@
-from .artwrap import Artwrap
+from .artwrap import Kindwrap
 from .klassdict import klassfund
 from .unbek import _UnbekMach
-from .ding import Ding
+from .ding import Thing
 from io import StringIO
 from weakref import WeakValueDictionary, ref
 from .einrueck import einrueck
 from .ladeklasse import ladeKlasse
 from .aschnitt import ASchnitt
 
-class _Art(Ding):
+class _Kind(Thing):
     kenn = "a"
     def __init__(self, json, orts, art):
         if orts == "a":
@@ -58,7 +58,7 @@ class _Art(Ding):
     def schaffe(self, orts, *args, **kwargs):
         if not hasattr(self._klass, "mach") or (hasattr(self._klass, "machbar") and not self._klass.machbar(*args, **kwargs)):
             raise Exception("%s ist nicht machbar"%str(self))
-        h = findArt("ah", self._weak).finde("h")
+        h = find_kind("ah", self._weak).finde("h")
         h.beanspruche(orts)
         #if orts in self._regobs.keys(): # Eigentlich unnoetig
         #   raise Exception("'%s' ist nicht belegbar"%orts)
@@ -73,11 +73,11 @@ class _Art(Ding):
             r.write("'" + x.orts + "'")
             r.write(einrueck(str(x)))
         return r.getvalue()
-Art = Artwrap(_Art)
+Kind = Kindwrap(_Kind)
 
-def findArt(artorts, weak):
+def find_kind(artorts, weak):
     if type(weak) is ref:
         rweak = weak()
     return ladeKlasse(artorts)(weak)
-def dingVonArt(ort, artorts, weak):
-    return findArt(artorts, weak).finde(ort)
+def find_thing_of_kind(ort, artorts, weak):
+    return find_kind(artorts, weak).finde(ort)

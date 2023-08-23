@@ -1,9 +1,9 @@
-from .artwrap import Artwrap
-from .ding import Ding
+from .artwrap import Kindwrap
+from .ding import Thing
 from .unbek import _UnbekMach
 from .finding import finDing
 
-class HabeLink(Ding):
+class HabeLink(Thing):
     kenn = "Hl"
     def _lade(self, json):
         self._blick = json["blick"]
@@ -21,4 +21,4 @@ class HabeLink(Ding):
         return "HabeLink('%s', '%s' > '%s')"%(self._blick, self._herkort, self._zielort)
     def mach(orts, blick, herkort, zielort):
         return {"blick" : blick, "herkort" : herkort, "zielort": zielort}
-HabeLink = Artwrap(HabeLink)
+HabeLink = Kindwrap(HabeLink)

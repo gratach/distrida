@@ -13,7 +13,7 @@ from .setzding import setzDing
 from .ansicht import ansicht
 from .machding import machDing
 from .habebaum import istFrei
-class Register:
+class Database:
     def __init__(self, folder = None):
         # Load general information
         static_data_path = Path(__file__).parent.parent / "data"
@@ -84,11 +84,11 @@ class Register:
     def __call__(self):
         return self
     def __getitem__(self, item):
-        return self.find(item) # loaded by plusFunks
+        return self.find(item)
     def __setitem__(self, orts, item):
         if not type(item) is tuple:
             item = (item,)
-        self.setz(orts, item) # loaded by plusFunks
+        self.setz(orts, item)
 
     
     def find(self, orts):

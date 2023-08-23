@@ -1,12 +1,12 @@
-from .ding import Ding
-from .artwrap import Artwrap
+from .ding import Thing
+from .artwrap import Kindwrap
 from .finding import finDing
 from ..pfade import Blick, Ort
 from .verkuerze import verkuerze
-from .art import dingVonArt
+from .kind import find_thing_of_kind
 from .binich import binIch
 from .wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
-class Freiheit(Ding):
+class Freiheit(Thing):
     kenn = "af"
     def _lade(self, json):
         self._habherkort = json["habherkort"]
@@ -52,7 +52,7 @@ class Freiheit(Ding):
     def _artvon(self, ort, vorl):
         rel, neul = verkuerze(ort, self._blick, vorl)
         if not rel.runter:
-            weiter = dingVonArt(self._artherkort, self._artherkart, self._weak)
+            weiter = find_thing_of_kind(self._artherkort, self._artherkart, self._weak)
         else:
             nr, teilweg, mehrfach = teilWegZuNummer(rel.weg)
             # die ersten beiden folgenden ifs brauchen nr nicht - hier könnte man performance sparen wenn man nr erst danach ermittelt
@@ -62,7 +62,7 @@ class Freiheit(Ding):
                 return (self._zielart, self)
             if nr >= self._zahl:
                 return (0, self)
-            weiter = dingVonArt(ort.zuString(), self._nutzart, self._weak)
+            weiter = find_thing_of_kind(ort.zuString(), self._nutzart, self._weak)
         if not (weiter and weiter.impl("Ssb")):
             return (None, None)
         return weiters("Ssb").artvon(ort, neul)
@@ -80,7 +80,7 @@ class Freiheit(Ding):
                 return (False, self._besi(nr), self, lambda: self._setzeHier(self._zahl))
             if not mehrfach:
                 return (True, self._besi(nr), self, None)
-            weiter = dingVonArt((self._blick + Ort(teilweg)).zuString(), self._nutzart, self._weak)
+            weiter = find_thing_of_kind((self._blick + Ort(teilweg)).zuString(), self._nutzart, self._weak)
         if not (weiter and weiter.impl("Ssb")):
             return (None, None, None, None)
         return weiters("Ssh").besitzvon(ort, neul)
@@ -115,4 +115,4 @@ class Freiheit(Ding):
         rel = self._blick.aufOrt(Ort.vonString(orts))
         #if not rel.runter:
         pass #TODO
-Freiheit = Artwrap(Freiheit)
+Freiheit = Kindwrap(Freiheit)

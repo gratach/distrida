@@ -1,5 +1,5 @@
 from .klassdict import klassdict
-from .art import Art 
+from .kind import Kind 
 from .habebaum import HabeBaum 
 from .artbaum import ArtBaum 
 from .unbek import Unbek
@@ -12,7 +12,7 @@ from .ortlink import OrtLink
 #from .freiheit import Freiheit
 def listearten(regi):
     d = klassdict()
-    for x in [Art, HabeBaum, ArtBaum, GpgPub, GpgPriv, Ident, Text, OrtLink]:#, Spender, Freiheit]:
+    for x in [Kind, HabeBaum, ArtBaum, GpgPub, GpgPriv, Ident, Text, OrtLink]:#, Spender, Freiheit]:
         d[x._kenn] = x
     for x in regi._reg.keys():
         if not x in d.keys():

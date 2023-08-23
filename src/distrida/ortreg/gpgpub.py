@@ -1,9 +1,9 @@
-from .ding import Ding
-from .artwrap import Artwrap
+from .ding import Thing
+from .artwrap import Kindwrap
 from .unbek import _UnbekMach
 from .finding import finDing
 
-class _GpgPub(Ding):
+class _GpgPub(Thing):
     kenn = "a#gpg#pub"
     def _lade(self, json):
         self._privort = json["privort"]
@@ -18,4 +18,4 @@ class _GpgPub(Ding):
         #TODO Krypto ordentlich implementieren 
     def mach(orts, art, key, privort):
         return {"privort":privort, "key":key}
-GpgPub = Artwrap(_GpgPub)
+GpgPub = Kindwrap(_GpgPub)

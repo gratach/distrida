@@ -1,8 +1,8 @@
-from .ding import Ding
-from .artwrap import Artwrap
+from .ding import Thing
+from .artwrap import Kindwrap
 from .unbek import _UnbekMach
 darstlen = 100
-class _Text(Ding):
+class _Text(Thing):
     kenn = "at"
     def _lade(self, json):
         self._text = json["text"]
@@ -10,4 +10,4 @@ class _Text(Ding):
         return "Text(\"" + self._text[:darstlen] + ("... " if len(self._text) > darstlen else "") + "\")"
     def mach(orts, art, text):
         return {"text":text}
-Text = Artwrap(_Text)  
+Text = Kindwrap(_Text)  

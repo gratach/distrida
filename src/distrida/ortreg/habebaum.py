@@ -1,12 +1,12 @@
-from .ding import Ding
-from .artwrap import Artwrap
+from .ding import Thing
+from .artwrap import Kindwrap
 from .unbek import _UnbekMach
 from .finding import finDing
 from ..pfade import Blick, Ort
 from .binich import binIch
 from .verkuerze import verkuerze
 
-class _HabeBaum(Ding):
+class _HabeBaum(Thing):
     kenn = "ah"
     def _lade(self, json):
         self._log = json["log"]
@@ -87,7 +87,7 @@ class _HabeBaum(Ding):
             return False
         self._log.append({"typ":">", "inh":{"fortort" : Ort(rel.weg, rel.runter).zuString(), "gruender" : idort}})
         
-HabeBaum = Artwrap(_HabeBaum)
+HabeBaum = Kindwrap(_HabeBaum)
 
 def beanspruche(orts, regi):
     h = HabeBaum(regi).finde("h")

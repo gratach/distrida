@@ -1,6 +1,6 @@
 from .klassdict import klassdict
 from weakref import WeakKeyDictionary, ref
-class Artwrap:
+class Kindwrap:
     def __init__(self, klasse):
         self._klasse = klasse
         self._kenn = klasse.kenn

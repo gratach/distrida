@@ -1,10 +1,10 @@
-from .ding import Ding
-from .artwrap import Artwrap
-from .art import dingVonArt
+from .ding import Thing
+from .artwrap import Kindwrap
+from .kind import find_thing_of_kind
 from .wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
 from .binich import binIch
 from ..pfade import Blick
-class Spender(Ding):
+class Spender(Thing):
     kenn = "as"
     def _lade(self, json):
         self._gruender = json["gruender"]
@@ -65,7 +65,7 @@ class Spender(Ding):
             if mehrfach:
                 if nr >= self._blickZahl:
                     return (False, self._besitzer, self, None)
-                weiter, neul = dingVonArt(self._nutzblick + Ort(wegVonNummer(nr)), self._nutzart, self._weak)
+                weiter, neul = find_thing_of_kind(self._nutzblick + Ort(wegVonNummer(nr)), self._nutzart, self._weak)
             else:
                 if nr < self._ortZahl:
                     return (True, self._ortBesi(nr), self, None)
@@ -138,4 +138,4 @@ class Spender(Ding):
                 return besi
             besi = x["erbe"]
         return besi
-Spender = Artwrap(Spender)
+Spender = Kindwrap(Spender)

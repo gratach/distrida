@@ -1,11 +1,11 @@
-from .ding import Ding
-from .artwrap import Artwrap
+from .ding import Thing
+from .artwrap import Kindwrap
 from .unbek import _UnbekMach
 from ..pfade import Ort, Blick
-from .art import dingVonArt
+from .kind import find_thing_of_kind
 from .verkuerze import verkuerze
 
-class _ArtBaum(Ding):
+class _ArtBaum(Thing):
     kenn = "ab"
     def _lade(self, json):
         self._log = json["log"]
@@ -25,7 +25,7 @@ class _ArtBaum(Ding):
                 if bl.hatOrt(rel):
                     if typ == "<":
                         return (xinh["art"], self)
-                    weiter = dingVonArt(xinh["fortort"], typ[1:], self._weak)
+                    weiter = find_thing_of_kind(xinh["fortort"], typ[1:], self._weak)
                     if not weiter.impl("Ssb"):
                         return (None, None)
                     return weiter.s("Ssb").artvon(ort, neul)
@@ -41,7 +41,7 @@ class _ArtBaum(Ding):
         return self._artvon(o, None)[0]
         
         
-ArtBaum = Artwrap(_ArtBaum)
+ArtBaum = Kindwrap(_ArtBaum)
 
 def artvon(orts, weak):
     b = ArtBaum(weak).finde("b")

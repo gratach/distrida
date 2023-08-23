@@ -1,8 +1,8 @@
-from .ding import Ding
-from .artwrap import Artwrap
+from .ding import Thing
+from .artwrap import Kindwrap
 from .unbek import _UnbekMach
 
-class _GpgPriv(Ding):
+class _GpgPriv(Thing):
     kenn = "a#gpg#priv"
     def _lade(self, json):
         pass
@@ -12,4 +12,4 @@ class _GpgPriv(Ding):
         pass
     def mach(orts, art, key, pubort):
         return {"pubort":pubort, "key":key}
-GpgPriv = Artwrap(_GpgPriv) 
+GpgPriv = Kindwrap(_GpgPriv) 

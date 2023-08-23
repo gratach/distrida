@@ -1,10 +1,10 @@
 from .schnitt import Schnitt
-class Ding:
-    def __init__(self, json, orts, art):
+class Thing:
+    def __init__(self, json, orts, kind):
         self._orts = orts
         self._json = json
-        self._art = art
-        self._weak = art._weak
+        self._kind = kind
+        self._weak = kind._weak
         self._schn = {}
         if hasattr(self, "_lade"):
             self._lade(json)
@@ -13,7 +13,7 @@ class Ding:
         return art.schaffe(o, *args, **kwargs)
     @property
     def klasse(self):
-        return self._art._klass
+        return self._kind._klass
     def s(self, orts, inh = None):
         r = self._schn.get(orts)
         if not r:
@@ -29,4 +29,4 @@ class Ding:
         return self._orts
     @property
     def art(self):
-        return self._art
+        return self._kind
