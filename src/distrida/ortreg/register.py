@@ -1,12 +1,18 @@
 from yaml import safe_load as yaml_load, safe_dump as yaml_dump
 from json import loads as json_load, dumps as json_dump
 from .listearten import listearten
-from .listefunks import plusFunks
 from ..pfade import Ort, Blick
 from pathlib import Path
 from filelock import FileLock
 import appdirs
 from sqlite3 import connect
+from .finding import finDing
+from weakref import ref
+from .artbaum import artvon
+from .setzding import setzDing
+from .ansicht import ansicht
+from .machding import machDing
+from .habebaum import istFrei
 class Register:
     def __init__(self, folder = None):
         # Load general information
@@ -53,7 +59,6 @@ class Register:
                     self._db.execute("INSERT INTO things (id, raw, json) VALUES (?, ?, ?)", (bytes(Ort(thing_identifyer)), None, json_dump(thing, sort_keys=True)))
             self._db.commit()
         listearten(self)
-        plusFunks(self) # load all helper funcions for this class
     def __del__(self):
         self._db.close()
         self._lock.release()
@@ -84,3 +89,17 @@ class Register:
         if not type(item) is tuple:
             item = (item,)
         self.setz(orts, item) # loaded by plusFunks
+
+    
+    def find(self, orts):
+        return finDing(orts, ref(self))
+    def artvon(self, orts):
+        return artvon(orts, ref(self))
+    def setz(self, orts, inh):
+        return setzDing(orts, inh, ref(self))
+    def ansicht(self):
+        return ansicht(ref(self))
+    def mach(self, art, args):
+        return machDing(art, args, ref(self))
+    def frei(self, orts):
+        return istFrei(orts, ref(self))
