@@ -1,5 +1,5 @@
 from .artwrap import Artwrap
-from .klassdict import klassdict, klassfund
+from .klassdict import klassfund
 from .unbek import _UnbekMach
 from .ding import Ding
 from io import StringIO

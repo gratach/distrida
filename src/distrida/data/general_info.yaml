@@ -1,0 +1,9 @@
+{
+    # This variable is used to specify the data pool of all the data used by the application
+    # It is only possible to exchange data with other applications if they use the same data pool
+    # The data pool value is an alphanumeric string that can also contain underscores and dashes
+    "data_pool": "devpool1",
+
+    # This variable is used to specify the version of the application
+    "version": "0.0.1",
+}

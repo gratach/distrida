@@ -1,6 +1,17 @@
 [build-system]
 requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
 
 [project]
 name = "distrida"
+version = "0.0.1"
+description = "Distributed data"
+dependencies = ["appdirs", "pyyaml", "filelock"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"distrida.data" = ["*.json"]
+
+[project.scripts]
+distrida = "distrida:command_line_programm"
