@@ -1,4 +1,4 @@
-from .artwrap import Kindwrap
+from .kindwrap import Kindwrap
 from .ding import Thing
 from .unbek import _UnbekMach
 from .finding import finDing

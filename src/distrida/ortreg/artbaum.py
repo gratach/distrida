@@ -1,5 +1,5 @@
 from .ding import Thing
-from .artwrap import Kindwrap
+from .kindwrap import Kindwrap
 from .unbek import _UnbekMach
 from ..pfade import Ort, Blick
 from .kind import find_thing_of_kind

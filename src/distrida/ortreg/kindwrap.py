@@ -19,7 +19,7 @@ class Kindwrap:
         return self._klasse.iniort(*args, **kwargs)
     
 arten = {}
-class ArtFinder:
+class KindFinder:
     def __init__(self, klass):
         self._klass = klass
         self._arten = WeakKeyDictionary()
@@ -32,7 +32,7 @@ class ArtFinder:
 def neuart(klass, register):
     a = arten.get(klass._kenn)
     if not a:
-        a = ArtFinder(klass)
+        a = KindFinder(klass)
         arten[klass._kenn] = a
     r = a.finde(register)
     return r

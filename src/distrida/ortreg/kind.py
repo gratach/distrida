@@ -1,4 +1,4 @@
-from .artwrap import Kindwrap
+from .kindwrap import Kindwrap
 from .klassdict import klassfund
 from .unbek import _UnbekMach
 from .ding import Thing

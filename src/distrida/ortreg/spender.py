@@ -1,5 +1,5 @@
 from .ding import Thing
-from .artwrap import Kindwrap
+from .kindwrap import Kindwrap
 from .kind import find_thing_of_kind
 from .wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
 from .binich import binIch
