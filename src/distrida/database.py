@@ -12,7 +12,15 @@ from .kind_classes.artbaum import artvon
 from .ortreg.setzding import setzDing
 from .ortreg.ansicht import ansicht
 from .ortreg.machding import machDing
-from .kind_classes.habebaum import istFrei
+from .kind_classes.kind import _Kind 
+from .kind_classes.habebaum import _HabeBaum, istFrei
+from .kind_classes.artbaum import _ArtBaum 
+from .kind_classes.unbek import Unbek
+from .kind_classes.gpgpub import _GpgPub
+from .kind_classes.gpgpriv import _GpgPriv
+from .kind_classes.ident import _Ident
+from .kind_classes.text import _Text
+from .kind_classes.ortlink import _OrtLink
 class Database:
     def __init__(self, folder = None):
         # Load general information
@@ -59,7 +67,40 @@ class Database:
                     self._db.execute("INSERT INTO things (id, raw, json) VALUES (?, ?, ?)", (bytes(Ort(thing_identifyer)), None, json_dump(thing, sort_keys=True)))
             self._db.commit()
         # Load kind classes
+        for kind_class in [_Kind, _HabeBaum, _ArtBaum, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
+            pass
         listearten(self)
+    def _get_database_entry(self, orts: Ort) -> tuple[str | bytes, bytes]:
+        '''
+        Returns the data pool entry for a given Ort
+        The return value is a tuple of the data and the format of the data encoded as bytes (b'json' or b'raw')
+        '''
+        orts = Ort(orts)
+        c = self._db.cursor()
+        c.execute("SELECT raw, json FROM things WHERE id = ?", (bytes(orts),))
+        raw, json = c.fetchone()
+        c.close()
+        if raw != None:
+            return (raw, b"raw")
+        elif json != None:
+            return (json, b"json")
+        else:
+            raise RuntimeError("Database entry not found")
+    def _set_database_entry(self, orts: Ort, data: bytes, format: bytes):
+        '''
+        Sets the data pool entry for a given Ort
+        The format of the data is encoded as bytes (b'json' or b'raw')
+        '''
+        orts = Ort(orts)
+        c = self._db.cursor()
+        if format == b"raw":
+            c.execute("UPDATE things SET raw = ?, json = NULL WHERE id = ?", (data, bytes(orts)))
+        elif format == b"json":
+            c.execute("UPDATE things SET raw = NULL, json = ? WHERE id = ?", (data, bytes(orts)))
+        else:
+            raise RuntimeError("Unknown data format")
+        c.close()
+        
     def __del__(self):
         self._db.close()
         self._lock.release()

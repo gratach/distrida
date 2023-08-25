@@ -7,7 +7,7 @@ from ..kind_classes.gpgpub import GpgPub
 from ..kind_classes.gpgpriv import GpgPriv
 from ..kind_classes.ident import Ident
 from ..kind_classes.text import Text
-from .ortlink import OrtLink
+from ..kind_classes.ortlink import OrtLink
 #from .spender import Spender
 #from .freiheit import Freiheit
 def listearten(regi):

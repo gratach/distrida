@@ -1,9 +1,12 @@
 {
-    "a": {
+  "a": {
     "a": {
       "datentyp": "statisch"
     },
     "a#gpg#priv": {
+      "datentyp": "statisch"
+    },
+    "a#format": {
       "datentyp": "statisch"
     },
     "a#gpg#pub": {
@@ -63,8 +66,8 @@
     "#halmod#info:#abh:": {
       "anmerkung": "Abhang von halmod mit modcode arg0"
     }
-    },
-    "ah": {
+  },
+  "ah": {
     "h#": {
       "blick" : "/03#",
       "gruender" : "i#altpc2",
@@ -125,8 +128,8 @@
         }
       ]
     }
-    },
-    "af": {
+  },
+  "af": {
     "f": {
       "habherkort" : "h",
       "artherkort" : "b",
@@ -138,8 +141,8 @@
       "nutzart" : "af",
       "erbschaft" : []
     }
-    },
-    "as": {
+  },
+  "as": {
     "s": {
       "gruender" : "i#altpc",
       "blickzahl" : 0,
@@ -168,13 +171,17 @@
     "w#testbro:": {
       "anmerkung": "Test kommunikation auf altpc: ~/halde/zeug/test/ortwald/testbro"
     }
-    },
-    "at": {
+  },
+  "at": {
     "": {
       "text": "Der Mensch ist nicht die Krone der Schöpfung. Die Zukunft gehört den Algorithmen. Wenn wir weiterhin in einer Welt leben wollen, die für uns Menschen lebenswert ist, müssen wir JETZT zusammenarbeiten und ALLES dafür tun um die Voraussetzungen zu schaffen. Das Fenster schließt sich."
     }
-    },
-    "a#hal#mod": {
+  },
+  "a#format":{
+    "#format:json": {},
+    "#format:raw": {}
+  },
+  "a#hal#mod": {
     "#hal#mod:#hausmeister_bin:": {},
     "#hal#mod:#hausmeister:": {},
     "#hal#mod:#githalde:": {},
@@ -183,7 +190,7 @@
     "#hal#mod:#hauptregister_bin:": {},
     "#hal#mod:#haldeneu:": {}
     },
-    "a#packer#pg": {
+  "a#packer#pg": {
     "#packer#pg:w": {
       "art": "wesen"
     },
@@ -205,8 +212,8 @@
     "#packer#pg:b": {
       "art": "artbaum"
     }
-    },
-    "ab": {
+  },
+  "ab": {
     "b#packer": {
       "blick": "/03#packer#",
       "gruender" : "i#altpc",
@@ -346,6 +353,13 @@
             "relort": "packer#"
           },
           "typ": ">ab"
+        },
+        {
+          "inh": {
+            "art": "a#format",
+            "relort": "format:"
+          },
+          "typ": "<"
         }
       ]
     },
@@ -460,8 +474,8 @@
         }
       ]
     }
-    },
-    "a#gpg#priv": {
+  },
+  "a#gpg#priv": {
     "#gpg#priv:#altpc" : {
       "pubort" : "#gpg#pub:#altpc",
       "key":"-----BEGIN PGP PRIVATE KEY BLOCK-----<Here would be the Key>-----END PGP PRIVATE KEY BLOCK-----\n"
@@ -480,8 +494,8 @@
       "privort" : "#gpg#priv:#altpc2",
       "key":"-----BEGIN PGP PUBLIC KEY BLOCK-----\n\nmQENBGM7TvoBCADORnTPSJmXEX6Zr+rjjiKbYLqPwiMP7QGHbFRm8y1PEYW8zyPP\nl2gJlj2gC9CgTdbdB8RxQvZGHTGotT/XM6rs37+f6y4yvV2t+o6EyYvUXKbFqA3a\n+Zlgg6qRjnsiKzZjHEjBBNuP4cWuIcmirXHpmYUx1LBSjTTRNExUrFiYfOE2ZxE/\n8xTxDLs5woHv96VfVVqCg1l9iWn6tlmGkGVcK34F7ct8vFmzzgVovpgZjvnHNSOq\nGBcUt9g/jMxmSeBb2i4Zuou9ohnW7evnP9EK5/TrzEOOdVqNqHUg5zLFs4wy8YJP\n1P4S2duBvT9qLwODth7Do/ur/CmWGHlv7k3hABEBAAG0JUF1dG9nZW5lcmF0ZWQg\nS2V5IDxncmF0YWNoQGdyYXRhY2hQQz6JATgEEwEIACIFAmM7TvoCGy8GCwkIBwMC\nBhUIAgkKCwQWAgMBAh4BAheAAAoJENY0V+wSfXAR+BcIAJQv4mje/fMApypiPlFI\nCC9ShL+MKeE1uSWaUc1WDtIDIEDZkGiWWbXQ0cRsRNQtyvIvxxEY1invESz78vXg\nDYRvNq4PuB2ff1RjcSZKZij7u0LWs+2MDNhDtV7qi+HJZnFhs9JGk2PDyR/eqFAR\nEPM0IHY4Yx3ZFcLj5DucvOZtdCBGSqOCCVPQpdzb9x+0cBYfkSc5XSUVtgoNbgbV\nHL7dxzCXXnBQd7/MzZlgpz8fX+ln1pYt4yKxsquafeR9rnYq4up5E0xZKovToETb\nqokWmiY7avZIDU+Wr8+aNhES+8C6AeeCl22+V8xaXcvoPtUlB/7RyDg0Jcm7ABb5\nEPI=\n=C99r\n-----END PGP PUBLIC KEY BLOCK-----\n"
     }
-    },
-    "ad": {
+  },
+  "ad": {
     "dh": {
       "erbt": []
     },
@@ -514,8 +528,8 @@
         "haufen"
       ]
     }
-    },
-    "ai": {
+  },
+  "ai": {
     "i#altpc": {
       "log" : [
         {
@@ -538,5 +552,5 @@
         }
       ]
     }
-    }
+  }
 }

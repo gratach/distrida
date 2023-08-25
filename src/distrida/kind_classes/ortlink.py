@@ -1,5 +1,5 @@
-from .thing import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 class _OrtLink(Thing):
     kenn = "al"
     def _lade(self, json):
