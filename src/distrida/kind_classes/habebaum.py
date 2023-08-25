@@ -1,10 +1,10 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 from .unbek import _UnbekMach
-from .finding import finDing
-from ..pfade import Blick, Ort
-from .binich import binIch
-from .verkuerze import verkuerze
+from ..ortreg.finding import finDing
+from ..address_system import Blick, Ort
+from ..ortreg.binich import binIch
+from ..ortreg.verkuerze import verkuerze
 
 class _HabeBaum(Thing):
     kenn = "ah"

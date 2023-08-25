@@ -1,9 +1,9 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 from .unbek import _UnbekMach
-from ..pfade import Ort, Blick
+from ..address_system import Ort, Blick
 from .kind import find_thing_of_kind
-from .verkuerze import verkuerze
+from ..ortreg.verkuerze import verkuerze
 
 class _ArtBaum(Thing):
     kenn = "ab"

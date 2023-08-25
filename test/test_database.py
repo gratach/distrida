@@ -1,7 +1,7 @@
 import sys, os; rootpath = os.path.join(os.path.dirname(__file__), ".."); sys.path.append(rootpath)
 import unittest
 
-from src.distrida.pfade import Ort, Blick
+from src.distrida.address_system import Ort, Blick
 from src.distrida.ortreg import nochfrei, reserviere, Kind, Database, artvon, finDing
 from json import load, dump
 from sys import argv

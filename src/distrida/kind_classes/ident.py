@@ -1,7 +1,7 @@
-from .kindwrap import Kindwrap
-from .ding import Thing
+from ..ortreg.kindwrap import Kindwrap
+from ..ortreg.thing import Thing
 from .unbek import _UnbekMach
-from .finding import finDing
+from ..ortreg.finding import finDing
 
 class _Ident(Thing):
     kenn = "ai"

@@ -1,5 +1,5 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 from .unbek import _UnbekMach
 darstlen = 100
 class _Text(Thing):

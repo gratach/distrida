@@ -1,4 +1,4 @@
-from .unbek import Unbek
+from ..kind_classes.unbek import Unbek
 from .klassdict import klassdict
 def ladeKlasse(arts):
     a = klassdict()

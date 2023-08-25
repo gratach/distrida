@@ -1,5 +1,5 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 def Unbek(kenn):
     return Kindwrap(_UnbekMach(kenn))
 class _UnbekMach:

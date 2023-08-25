@@ -1,4 +1,4 @@
-from .ding import Thing
+from .thing import Thing
 from .kindwrap import Kindwrap
 class _OrtLink(Thing):
     kenn = "al"

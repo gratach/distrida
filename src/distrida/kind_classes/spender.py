@@ -1,9 +1,9 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 from .kind import find_thing_of_kind
-from .wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
-from .binich import binIch
-from ..pfade import Blick
+from ..ortreg.wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
+from ..ortreg.binich import binIch
+from ..address_system import Blick
 class Spender(Thing):
     kenn = "as"
     def _lade(self, json):

@@ -1,12 +1,12 @@
-from .kindwrap import Kindwrap
-from .klassdict import klassfund
+from ..ortreg.kindwrap import Kindwrap
+from ..ortreg.klassdict import klassfund
 from .unbek import _UnbekMach
-from .ding import Thing
+from ..ortreg.thing import Thing
 from io import StringIO
 from weakref import WeakValueDictionary, ref
-from .einrueck import einrueck
-from .ladeklasse import ladeKlasse
-from .aschnitt import ASchnitt
+from ..ortreg.einrueck import einrueck
+from ..ortreg.ladeklasse import ladeKlasse
+from ..ortreg.aschnitt import ASchnitt
 
 class _Kind(Thing):
     kenn = "a"

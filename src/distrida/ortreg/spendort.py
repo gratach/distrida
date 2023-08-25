@@ -1,8 +1,8 @@
-from .spender import Spender
-from .freiheit import Freiheit
+from ..kind_classes.spender import Spender
+from ..kind_classes.freiheit import Freiheit
 from .machbei import machbei
 from .pfade import Ort, Blick
-from .ident import ich
+from ..kind_classes.ident import ich
 def spendOrts(orts, weak):
     spe = Spender(weak)
     r = None

@@ -1,22 +1,22 @@
 from yaml import safe_load as yaml_load, safe_dump as yaml_dump
 from json import loads as json_load, dumps as json_dump
-from .listearten import listearten
-from ..pfade import Ort, Blick
+from .ortreg.listearten import listearten
+from .address_system import Ort, Blick
 from pathlib import Path
 from filelock import FileLock
 import appdirs
 from sqlite3 import connect
-from .finding import finDing
+from .ortreg.finding import finDing
 from weakref import ref
-from .artbaum import artvon
-from .setzding import setzDing
-from .ansicht import ansicht
-from .machding import machDing
-from .habebaum import istFrei
+from .kind_classes.artbaum import artvon
+from .ortreg.setzding import setzDing
+from .ortreg.ansicht import ansicht
+from .ortreg.machding import machDing
+from .kind_classes.habebaum import istFrei
 class Database:
     def __init__(self, folder = None):
         # Load general information
-        static_data_path = Path(__file__).parent.parent / "data"
+        static_data_path = Path(__file__).parent / "static_data"
         general_info_path = static_data_path / "general_info.yaml"
         with general_info_path.open("r") as f:
             general_info = yaml_load(f)
@@ -58,6 +58,7 @@ class Database:
                 for thing_identifyer, thing in thing_dict.items():
                     self._db.execute("INSERT INTO things (id, raw, json) VALUES (?, ?, ?)", (bytes(Ort(thing_identifyer)), None, json_dump(thing, sort_keys=True)))
             self._db.commit()
+        # Load kind classes
         listearten(self)
     def __del__(self):
         self._db.close()

@@ -1,11 +1,11 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
-from .finding import finDing
-from ..pfade import Blick, Ort
-from .verkuerze import verkuerze
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
+from ..ortreg.finding import finDing
+from ..address_system import Blick, Ort
+from ..ortreg.verkuerze import verkuerze
 from .kind import find_thing_of_kind
-from .binich import binIch
-from .wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
+from ..ortreg.binich import binIch
+from ..ortreg.wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
 class Freiheit(Thing):
     kenn = "af"
     def _lade(self, json):

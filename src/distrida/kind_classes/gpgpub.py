@@ -1,7 +1,7 @@
-from .ding import Thing
-from .kindwrap import Kindwrap
+from ..ortreg.thing import Thing
+from ..ortreg.kindwrap import Kindwrap
 from .unbek import _UnbekMach
-from .finding import finDing
+from ..ortreg.finding import finDing
 
 class _GpgPub(Thing):
     kenn = "a#gpg#pub"

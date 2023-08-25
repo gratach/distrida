@@ -1,4 +1,4 @@
-from ..pfade import wegZuUInt, wegVonUInt, teilWegZuUInt, teilWegVonUInt
+from ..address_system import wegZuUInt, wegVonUInt, teilWegZuUInt, teilWegVonUInt
 def teilWegZuNummer(weg):
     bruch = weg.find(b"\xfe")
     mehrfach = bruch != -1
