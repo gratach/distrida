@@ -9,7 +9,7 @@ class HabeLink(Thing):
         self._blick = json["blick"]
         self._herkort = json["herkort"]
         self._zielort= json["zielort"]
-        self.s("Ssh", {
+        self.interface("Ssh", {
             "besitzvon" : self._besitzvon
         })
     def _besitzvon(self, ort, vorl):

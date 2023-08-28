@@ -5,17 +5,18 @@ from ..address_system import Ort, Blick
 from .kind import find_thing_of_kind
 from ..ortreg.verkuerze import verkuerze
 
-class _ArtBaum(Thing):
-    kenn = "ab"
+
+class _KindTree(Thing):
+    kind_address = Ort("ab")
     def _lade(self, json):
         self._log = json["log"]
         self._blick = Blick.vonString(json["blick"])
-        self.s("Ssb", {
-            "artvon" : self._artvon
+        self.interface(Ort("Ssb"), {
+            "artvon" : self._find_kind_of
         })
     def __repr__(self):
         return "ArtBaum(" + self._orts + ")"
-    def _artvon(self, ort, vorl):
+    def _find_kind_of(self, ort, vorl = None):
         rel, neul = verkuerze(ort, self._blick, vorl)
         for x in self._log:
             typ =  x["typ"]
@@ -25,10 +26,11 @@ class _ArtBaum(Thing):
                 if bl.hatOrt(rel):
                     if typ == "<":
                         return (xinh["art"], self)
-                    weiter = find_thing_of_kind(xinh["fortort"], typ[1:], self._weak)
+                    weiter = self._database.get_thing_from_kind_address(Ort.vonString(xinh["fortort"]), Ort.vonString(typ[1:]))
+                    #find_thing_of_kind(xinh["fortort"], typ[1:], self._weak)
                     if not weiter.impl("Ssb"):
                         return (None, None)
-                    return weiter.s("Ssb").artvon(ort, neul)
+                    return weiter.s(Ort("Ssb")).artvon(ort, neul)
             elif typ == "!":
                 if Ort(xinh["relort"]) == rel:
                     return xinh["ort"]
@@ -38,10 +40,10 @@ class _ArtBaum(Thing):
         return (0, self)
     def finde(self, orts):
         o = Ort.vonString(orts)
-        return self._artvon(o, None)[0]
+        return self._find_kind_of(o, None)[0]
         
         
-ArtBaum = Kindwrap(_ArtBaum)
+ArtBaum = Kindwrap(_KindTree)
 
 def artvon(orts, weak):
     b = ArtBaum(weak).finde("b")

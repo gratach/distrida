@@ -12,10 +12,10 @@ class _HabeBaum(Thing):
         self._log = json["log"]
         self._blick = Blick.vonString(json["blick"])
         self._gruender = json["gruender"]
-        self.s("Ssh", {
+        self.interface("Ssh", {
             "besitzvon" : self._besitzvon
         })
-        self.s("Ssg", {
+        self.interface("Ssg", {
             "schenke" : self.schenke
         })
     def __repr__(self):

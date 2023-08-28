@@ -7,20 +7,22 @@ from filelock import FileLock
 import appdirs
 from sqlite3 import connect
 from .ortreg.finding import finDing
-from weakref import ref
-from .kind_classes.artbaum import artvon
+from weakref import ref, WeakValueDictionary
+from .kind_classes.kind_tree import artvon
 from .ortreg.setzding import setzDing
 from .ortreg.ansicht import ansicht
 from .ortreg.machding import machDing
+from .ortreg.thing import Thing
 from .kind_classes.kind import _Kind 
 from .kind_classes.habebaum import _HabeBaum, istFrei
-from .kind_classes.artbaum import _ArtBaum 
+from .kind_classes.kind_tree import _KindTree 
 from .kind_classes.unbek import Unbek
 from .kind_classes.gpgpub import _GpgPub
 from .kind_classes.gpgpriv import _GpgPriv
 from .kind_classes.ident import _Ident
 from .kind_classes.text import _Text
 from .kind_classes.ortlink import _OrtLink
+from typing import Self
 class Database:
     def __init__(self, folder = None):
         # Load general information
@@ -66,37 +68,78 @@ class Database:
                 for thing_identifyer, thing in thing_dict.items():
                     self._db.execute("INSERT INTO things (id, raw, json) VALUES (?, ?, ?)", (bytes(Ort(thing_identifyer)), None, json_dump(thing, sort_keys=True)))
             self._db.commit()
-        # Load kind classes
-        for kind_class in [_Kind, _HabeBaum, _ArtBaum, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
-            pass
-        listearten(self)
-    def _get_database_entry(self, orts: Ort) -> tuple[str | bytes, bytes]:
+        # Prepare WeakValueDictionary for things
+        self._things = WeakValueDictionary()
+        # Load hardcoded kinds
+        self._hardcoded_kinds = set()
+        self._hardcoded_kind_class_dict = {}
+        for kind_class in [_Kind, _HabeBaum, _KindTree, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
+            self._hardcoded_kind_class_dict[kind_class.kind_address] = kind_class
+            self._hardcoded_kinds.add(self._get_thing_from_function(kind_class.kind_address, _Kind))
+        #listearten(self)
+    def _register_thing(self, thing: _Kind):
+        '''
+        Registers a thing
+        '''
+        self._things[thing.address] = thing
+    def _unregister_thing(self, thing: _Kind):
+        '''
+        Unregisters a thing
+        '''
+        del self._things[thing.address]
+    def get_thing(self, ort: Ort) -> _Kind:
+        '''
+        Returns the thing with the given Ort
+        '''
+        # Return thing if it is already loaded
+        if ort in self._things:
+            return self._things[ort]
+        # Get the kind of the thing
+    def _get_thing_from_kind_address(self, address: Ort, kind_address: Ort) -> _Kind:
+        '''
+        Loads a thing manually using the given kind address
+        '''
+        # Return thing if it is already loaded
+        if address in self._things:
+            return self._things[address]
+        # Load kind
+        kind = self.get_thing(kind_address)
+        # Load thing from database
+        return kind.interface(Ort("Ssa")).get_thing(address)
+    def _get_thing_from_function(self, address: Ort, thing_creator: callable[[any, bytes, Ort, Self], Thing]) -> _Kind:
+        '''
+        Loads a thing manually using the given thing creator function
+        '''
+        # Return thing if it is already loaded
+        if address in self._things:
+            return self._things[address]
+        # Load thing from database
+        return thing_creator(*self._get_database_entry(address), address, self)
+    def _get_database_entry(self, ort: Ort) -> tuple[str | bytes, bytes]:
         '''
         Returns the data pool entry for a given Ort
         The return value is a tuple of the data and the format of the data encoded as bytes (b'json' or b'raw')
         '''
-        orts = Ort(orts)
         c = self._db.cursor()
-        c.execute("SELECT raw, json FROM things WHERE id = ?", (bytes(orts),))
+        c.execute("SELECT raw, json FROM things WHERE id = ?", (bytes(ort),))
         raw, json = c.fetchone()
         c.close()
         if raw != None:
             return (raw, b"raw")
         elif json != None:
-            return (json, b"json")
+            return (json_load(json), b"json")
         else:
             raise RuntimeError("Database entry not found")
-    def _set_database_entry(self, orts: Ort, data: bytes, format: bytes):
+    def _set_database_entry(self, ort: Ort, data: bytes, format: bytes):
         '''
         Sets the data pool entry for a given Ort
         The format of the data is encoded as bytes (b'json' or b'raw')
         '''
-        orts = Ort(orts)
         c = self._db.cursor()
         if format == b"raw":
-            c.execute("UPDATE things SET raw = ?, json = NULL WHERE id = ?", (data, bytes(orts)))
+            c.execute("UPDATE things SET raw = ?, json = NULL WHERE id = ?", (data, bytes(ort)))
         elif format == b"json":
-            c.execute("UPDATE things SET raw = NULL, json = ? WHERE id = ?", (data, bytes(orts)))
+            c.execute("UPDATE things SET raw = NULL, json = ? WHERE id = ?", (json_dump(data, sort_keys=True), bytes(ort)))
         else:
             raise RuntimeError("Unknown data format")
         c.close()

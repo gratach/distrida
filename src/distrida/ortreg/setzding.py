@@ -1,5 +1,5 @@
 from ..kind_classes.kind import find_thing_of_kind
-from ..kind_classes.artbaum import artvon
+from ..kind_classes.kind_tree import artvon
 from ..kind_classes.kind import find_kind
 from ..kind_classes.habebaum import beanspruchbar, beanspruche
 def setzDing(orts, wert, weak):
