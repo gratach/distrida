@@ -2,9 +2,10 @@ from ..ortreg.kindwrap import Kindwrap
 from ..ortreg.thing import Thing
 from .unbek import _UnbekMach
 from ..ortreg.finding import finDing
+from ..address_system import Ort
 
 class _Ident(Thing):
-    kenn = "ai"
+    kind_address = Ort("ai")
     def _lade(self, json):
         self._log = json["log"]
     def __repr__(self):
@@ -27,7 +28,7 @@ class _Ident(Thing):
         return True
     def mach(orts, art, kennungen = []):
         return {"log":[{"typ" : "+", "inh" : {"kenn" : x}} for x in kenn]}
-Ident = Kindwrap(_Ident) 
+Ident = "TEMPORARY"#Kindwrap(_Ident) 
 
 def meineIdents(weak):
     r = []

@@ -1,9 +1,10 @@
 from ..ortreg.thing import Thing
 from ..ortreg.kindwrap import Kindwrap
 from .unbek import _UnbekMach
+from ..address_system import Ort
 
 class _GpgPriv(Thing):
-    kenn = "a#gpg#priv"
+    kind_address = Ort("a#gpg#priv")
     def _lade(self, json):
         pass
     def __repr__(self):
@@ -12,4 +13,4 @@ class _GpgPriv(Thing):
         pass
     def mach(orts, art, key, pubort):
         return {"pubort":pubort, "key":key}
-GpgPriv = Kindwrap(_GpgPriv) 
+GpgPriv = "TEMPORARY"#Kindwrap(_GpgPriv) 

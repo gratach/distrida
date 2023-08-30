@@ -7,7 +7,7 @@ from ..ortreg.binich import binIch
 from ..ortreg.verkuerze import verkuerze
 
 class _HabeBaum(Thing):
-    kenn = "ah"
+    kind_address = Ort("ah")
     def _lade(self, json):
         self._log = json["log"]
         self._blick = Blick.vonString(json["blick"])
@@ -87,7 +87,7 @@ class _HabeBaum(Thing):
             return False
         self._log.append({"typ":">", "inh":{"fortort" : Ort(rel.weg, rel.runter).zuString(), "gruender" : idort}})
         
-HabeBaum = Kindwrap(_HabeBaum)
+HabeBaum = "TEMPORARY"#Kindwrap(_HabeBaum)
 
 def beanspruche(orts, regi):
     h = HabeBaum(regi).finde("h")

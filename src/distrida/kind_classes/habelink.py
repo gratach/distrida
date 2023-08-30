@@ -2,9 +2,10 @@ from ..ortreg.kindwrap import Kindwrap
 from ..ortreg.thing import Thing
 from .unbek import _UnbekMach
 from ..ortreg.finding import finDing
+from ..address_system import Ort
 
 class HabeLink(Thing):
-    kenn = "Hl"
+    kind_address = Ort("Hl")
     def _lade(self, json):
         self._blick = json["blick"]
         self._herkort = json["herkort"]
@@ -21,4 +22,4 @@ class HabeLink(Thing):
         return "HabeLink('%s', '%s' > '%s')"%(self._blick, self._herkort, self._zielort)
     def mach(orts, blick, herkort, zielort):
         return {"blick" : blick, "herkort" : herkort, "zielort": zielort}
-HabeLink = Kindwrap(HabeLink)
+HabeLink = "TEMPORARY"#Kindwrap(HabeLink)

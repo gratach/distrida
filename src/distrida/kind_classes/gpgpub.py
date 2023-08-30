@@ -2,9 +2,10 @@ from ..ortreg.thing import Thing
 from ..ortreg.kindwrap import Kindwrap
 from .unbek import _UnbekMach
 from ..ortreg.finding import finDing
+from ..address_system import Ort
 
 class _GpgPub(Thing):
-    kenn = "a#gpg#pub"
+    kind_address = Ort("a#gpg#pub")
     def _lade(self, json):
         self._privort = json["privort"]
     def __repr__(self):
@@ -18,4 +19,4 @@ class _GpgPub(Thing):
         #TODO Krypto ordentlich implementieren 
     def mach(orts, art, key, privort):
         return {"privort":privort, "key":key}
-GpgPub = Kindwrap(_GpgPub)
+GpgPub = "TEMPORARY"#Kindwrap(_GpgPub)

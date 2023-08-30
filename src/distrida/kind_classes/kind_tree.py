@@ -43,7 +43,7 @@ class _KindTree(Thing):
         return self._find_kind_of(o, None)[0]
         
         
-ArtBaum = Kindwrap(_KindTree)
+ArtBaum = "TEMPORARY"#Kindwrap(_KindTree)
 
 def artvon(orts, weak):
     b = ArtBaum(weak).finde("b")

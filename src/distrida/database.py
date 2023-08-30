@@ -22,7 +22,7 @@ from .kind_classes.gpgpriv import _GpgPriv
 from .kind_classes.ident import _Ident
 from .kind_classes.text import _Text
 from .kind_classes.ortlink import _OrtLink
-from typing import Self
+from typing import Self, Callable
 class Database:
     def __init__(self, folder = None):
         # Load general information
@@ -106,7 +106,7 @@ class Database:
         kind = self.get_thing(kind_address)
         # Load thing from database
         return kind.interface(Ort("Ssa")).get_thing(address)
-    def _get_thing_from_function(self, address: Ort, thing_creator: callable[[any, bytes, Ort, Self], Thing]) -> _Kind:
+    def _get_thing_from_function(self, address: Ort, thing_creator: Callable[[any, bytes, Ort, Self], Thing]) -> _Kind:
         '''
         Loads a thing manually using the given thing creator function
         '''
@@ -144,6 +144,9 @@ class Database:
             raise RuntimeError("Unknown data format")
         c.close()
         
+
+
+
     def __del__(self):
         self._db.close()
         self._lock.release()
@@ -168,9 +171,9 @@ class Database:
         r[orts] = daten
     def __call__(self):
         return self
-    def __getitem__(self, item):
-        return self.find(item)
-    def __setitem__(self, orts, item):
+    def __getitem__(self, address : Ort) -> _Kind:
+        return self.get_thing(address)
+    def __setitem__(self, orts, address):
         if not type(item) is tuple:
             item = (item,)
         self.setz(orts, item)

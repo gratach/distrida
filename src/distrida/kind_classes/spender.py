@@ -3,9 +3,9 @@ from ..ortreg.kindwrap import Kindwrap
 from .kind import find_thing_of_kind
 from ..ortreg.wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
 from ..ortreg.binich import binIch
-from ..address_system import Blick
+from ..address_system import Blick, Ort
 class Spender(Thing):
-    kenn = "as"
+    kind_address = Ort("as")
     def _lade(self, json):
         self._gruender = json["gruender"]
         self._blickZahl = json["blickzahl"]
@@ -138,4 +138,4 @@ class Spender(Thing):
                 return besi
             besi = x["erbe"]
         return besi
-Spender = Kindwrap(Spender)
+Spender = "TEMPORARY"#Kindwrap(Spender)

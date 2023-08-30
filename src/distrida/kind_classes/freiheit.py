@@ -7,7 +7,7 @@ from .kind import find_thing_of_kind
 from ..ortreg.binich import binIch
 from ..ortreg.wegdeutung import wegZuNummer, wegVonNummer, teilWegZuNummer, teilWegVonNummer
 class Freiheit(Thing):
-    kenn = "af"
+    kind_address = Ort("af")
     def _lade(self, json):
         self._habherkort = json["habherkort"]
         self._artherkort = json["artherkort"]
@@ -115,4 +115,4 @@ class Freiheit(Thing):
         rel = self._blick.aufOrt(Ort.vonString(orts))
         #if not rel.runter:
         pass #TODO
-Freiheit = Kindwrap(Freiheit)
+Freiheit = "TEMPORARY"#Kindwrap(Freiheit)
