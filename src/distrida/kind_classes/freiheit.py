@@ -21,7 +21,7 @@ class Freiheit(Thing):
         self._blick = Blick.vonString(self._kegel)
         self._besitzer = self._erbschaft[-1]["erbe"] if self._erbschaft else self._gruender
         self.interface("Ssb", {
-            "artvon" : self._artvon
+            "find_kind_adress_information" : self._artvon
         })
         self.interface("Ssh", {
             "besitzvon" : self._besitzvon

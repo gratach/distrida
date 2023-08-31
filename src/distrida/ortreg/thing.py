@@ -16,8 +16,8 @@ class Thing:
         Creates an interface
         '''
         self._interfaces[interface_name] = Schnitt(self, interface)
-    def interface(self, ort, inh = None):
-        return self._interfaces.get(ort)
+    def interface(self, address, inh = None):
+        return self._interfaces.get(address)
     @property
     def address(self):
         return self._address

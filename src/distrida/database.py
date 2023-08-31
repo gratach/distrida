@@ -76,6 +76,8 @@ class Database:
         for kind_class in [_Kind, _HabeBaum, _KindTree, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
             self._hardcoded_kind_class_dict[kind_class.kind_address] = kind_class
             self._hardcoded_kinds.add(self._get_thing_from_function(kind_class.kind_address, _Kind))
+        # Load root kind tree
+        self._root_kind_tree = self._get_thing_from_function(Ort("b"), _KindTree)
         #listearten(self)
     def _register_thing(self, thing: _Kind):
         '''
@@ -95,6 +97,11 @@ class Database:
         if ort in self._things:
             return self._things[ort]
         # Get the kind of the thing
+        kind_address, kind_address_asighner = self._root_kind_tree.interface(Ort("Ssb")).find_address_kind_information(ort)
+        if kind_address == None:
+            raise RuntimeError("Thing not found")
+        # Load the thing
+        return self._get_thing_from_kind_address(ort, kind_address)
     def _get_thing_from_kind_address(self, address: Ort, kind_address: Ort) -> _Kind:
         '''
         Loads a thing manually using the given kind address
