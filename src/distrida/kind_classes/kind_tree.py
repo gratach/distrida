@@ -26,8 +26,8 @@ class _KindTree(Thing):
         rel = self._blick.aufOrt(address)
         for x in self._log:
             typ =  x["typ"]
+            xinh = x["inh"]
             if typ == "<" or typ[0] == ">":
-                xinh = x["inh"]
                 bl = Blick.vonOrt(Ort.vonString(xinh["relort"]), True)
                 if bl.hatOrt(rel):
                     if typ == "<":
@@ -39,14 +39,14 @@ class _KindTree(Thing):
                     return weiter.s(Ort("Ssb")).artvon(address)
             elif typ == "!":
                 if Ort.vonString(xinh["relort"]) == rel:
-                    return (Ort.vonString(xinh["ort"]), self)
+                    return (Ort.vonString(xinh["art"]), self)
             else:
                 print("implementiert nicht Ssb", typ)
                 return (None, None) #TODO protokoll erweitern 
         return (None, self)
     
 
-    
+
     def finde(self, orts):
         o = Ort.vonString(orts)
         return self._find_adress_kind_information(o, None)[0]

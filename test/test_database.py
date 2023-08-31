@@ -37,6 +37,11 @@ class DatabaseTest(unittest.TestCase):
             db = Database(tempdir)
             thing = db[Ort("as")]
             self.assertIsNotNone(thing)
+    def test_load_root_text(self):
+        with TemporaryDirectory() as tempdir:
+            db = Database(tempdir)
+            thing = db[Ort("")]
+            self.assertEqual(thing.text, "Sei verantwortungsvoll")
     def test_load_non_existing(self):
         with TemporaryDirectory() as tempdir:
             db = Database(tempdir)
@@ -44,8 +49,8 @@ class DatabaseTest(unittest.TestCase):
     def test_free(self):
         with TemporaryDirectory() as tempdir:
             db = Database(tempdir)
-            a = db["a"]
-            hb = db["h"]
+            a = db[Ort("a")]
+            hb = db[Ort("h")]
             for x in a.liste():
                 for y in x.liste():
                     hb.beanspruche(y._orts)
