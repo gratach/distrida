@@ -27,12 +27,12 @@ class _KindTree(Thing):
         for x in self._log:
             typ =  x["typ"]
             xinh = x["inh"]
-            if typ == "<" or typ[0] == ">":
+            if typ == "<" or typ == ">":
                 bl = Blick.vonOrt(Ort.vonString(xinh["relort"]), True)
                 if bl.hatOrt(rel):
                     if typ == "<":
                         return (Ort.vonString(xinh["art"]), self)
-                    weiter = self._database.get_thing_from_kind_address(Ort.vonString(xinh["fortort"]), Ort.vonString(typ[1:]))
+                    weiter = self._database.get_thing_from_kind_address(Ort.vonString(xinh["fortort"]), Ort.vonString(xinh["manager_kind_address"]))
                     #find_thing_of_kind(xinh["fortort"], typ[1:], self._weak)
                     if not weiter.impl("Ssb"):
                         return (None, None)

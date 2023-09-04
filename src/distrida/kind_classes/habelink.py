@@ -11,7 +11,7 @@ class HabeLink(Thing):
         self._herkort = json["herkort"]
         self._zielort= json["zielort"]
         self.interface("Ssh", {
-            "besitzvon" : self._besitzvon
+            "find_ownership_information" : self._besitzvon
         })
     def _besitzvon(self, ort, vorl):
         fd = finDing(self._zielort if rel.runter else self._herkort, self._weak)

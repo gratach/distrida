@@ -226,9 +226,10 @@
         {
           "inh": {
             "fortort": "b#",
-            "relort": "/ff:"
+            "relort": "/ff:",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
@@ -246,9 +247,10 @@
         {
           "inh": {
             "fortort": "b#hal",
-            "relort": "/ff:"
+            "relort": "/ff:",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
@@ -273,9 +275,10 @@
         {
           "inh": {
             "fortort": "b#",
-            "relort": "/ff:"
+            "relort": "/ff:",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
@@ -300,9 +303,10 @@
         {
           "inh": {
             "fortort": "b#",
-            "relort": "/ff:"
+            "relort": "/ff:",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
@@ -314,9 +318,10 @@
         {
           "inh": {
             "fortort": "b#hal#mod",
-            "relort": "mod#"
+            "relort": "mod#",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         }
       ]
     },
@@ -327,23 +332,26 @@
         {
           "inh": {
             "fortort": "b",
-            "relort": "/ff:"
+            "relort": "/ff:",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
             "fortort": "b#gpg",
-            "relort": "gpg#"
+            "relort": "gpg#",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
             "fortort": "b#hal",
-            "relort": "hal#"
+            "relort": "hal#",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
@@ -355,9 +363,10 @@
         {
           "inh": {
             "fortort": "b#packer",
-            "relort": "packer#"
+            "relort": "packer#",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
@@ -375,16 +384,18 @@
         {
           "inh": {
             "fortort": "b#",
-            "relort": "#"
+            "relort": "#",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         },
         {
           "inh": {
             "fortort": "f",
-            "relort": "$"
+            "relort": "$",
+            "manager_kind_address": "af"
           },
-          "typ": ">af"
+          "typ": ">"
         },
         {
           "inh": {
@@ -473,9 +484,10 @@
         {
           "inh": {
             "fortort": "b#",
-            "relort": "#"
+            "relort": "#",
+            "manager_kind_address": "ab"
           },
-          "typ": ">ab"
+          "typ": ">"
         }
       ]
     }

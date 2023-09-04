@@ -8,9 +8,6 @@ from sys import argv
 import os
 import sys
 from tempfile import TemporaryDirectory
-class AlwaysPassingTest(unittest.TestCase):
-    def test_passing(self):
-        self.assertTrue(True)
 class DatabaseTest(unittest.TestCase):
     def test_load_kind_kind(self):
         with TemporaryDirectory() as tempdir:

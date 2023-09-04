@@ -14,7 +14,7 @@ from .ortreg.ansicht import ansicht
 from .ortreg.machding import machDing
 from .ortreg.thing import Thing
 from .kind_classes.kind import _Kind 
-from .kind_classes.habebaum import _HabeBaum, istFrei
+from .kind_classes.ownership_tree import OwnershipTree, istFrei
 from .kind_classes.kind_tree import _KindTree 
 from .kind_classes.unbek import Unbek
 from .kind_classes.gpgpub import _GpgPub
@@ -73,7 +73,7 @@ class Database:
         # Load hardcoded kinds
         self._hardcoded_kinds = set()
         self._hardcoded_kind_class_dict = {}
-        for kind_class in [_Kind, _HabeBaum, _KindTree, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
+        for kind_class in [_Kind, OwnershipTree, _KindTree, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
             self._hardcoded_kind_class_dict[kind_class.kind_address] = kind_class
             self._hardcoded_kinds.add(self._get_thing_from_function(kind_class.kind_address, _Kind))
         # Load root kind tree

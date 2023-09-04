@@ -24,7 +24,7 @@ class Freiheit(Thing):
             "find_kind_adress_information" : self._artvon
         })
         self.interface("Ssh", {
-            "besitzvon" : self._besitzvon
+            "find_ownership_information" : self._besitzvon
         })
         self.interface("SsKs", {
             "zielart" : lambda : self._zielart,

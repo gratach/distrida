@@ -1,6 +1,6 @@
 from .klassdict import klassdict
 from ..kind_classes.kind import Kind 
-from ..kind_classes.habebaum import HabeBaum 
+from ..kind_classes.ownership_tree import HabeBaum 
 from ..kind_classes.kind_tree import ArtBaum 
 from ..kind_classes.unbek import Unbek
 from ..kind_classes.gpgpub import GpgPub

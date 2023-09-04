@@ -6,25 +6,27 @@ from ..address_system import Blick, Ort
 from ..ortreg.binich import binIch
 from ..ortreg.verkuerze import verkuerze
 
-class _HabeBaum(Thing):
+class OwnershipTree(Thing):
     kind_address = Ort("ah")
     def _lade(self, json):
         self._log = json["log"]
-        self._blick = Blick.vonString(json["blick"])
-        self._gruender = json["gruender"]
+        self._address_cone = Blick.vonString(json["blick"])
+        self._gruender = Ort.vonString(json["gruender"])
         self.interface("Ssh", {
-            "besitzvon" : self._besitzvon
+            "find_ownership_information" : self._find_ownership_information
         })
         self.interface("Ssg", {
             "schenke" : self.schenke
         })
-    def __repr__(self):
-        return "HabeBaum(" + self._orts + ")"
-    def besitzvon(self, orts):
-        o = Ort.vonString(orts)
-        return self._besitzvon(o, None)
-    def _besitzvon(self, ort, vorl):
-        rel, neul = verkuerze(ort, self._blick, vorl)
+    def _find_ownership_information(self, address):
+        """
+        Finds the ownership information of the given address.
+        Returns a tuple of the assignment status, the owner address and the manager.
+        - The assignment status is True if the address is allready assigned and False if it is not assigned yet.
+        - When the address is assigned, the owner address is the address of the address owner. Otherwise it is the adress of the managers owner.
+        - The manager is the thing that is responsible for the assignment.
+        """
+        rel = self._address_cone.aufOrt(address)
         besi = self._gruender
         for x in self._log:
             typ = x["typ"]
@@ -34,16 +36,22 @@ class _HabeBaum(Thing):
                 if bl.hatOrt(rel):
                     fd = finDing(xinh["fortort"], self._weak)
                     if not (fd and fd.impl("Ssh")):
-                        return (None, None, None, None)
-                    return fd.s("Ssh").besitzvon(ort, neul)
+                        raise Exception("The owner of the address '%s' could not be found"%address)
+                    return fd.s("Ssh").besitzvon(address, neul)
             elif typ == "!":
                 if Ort(x["inh"]["vollort"]) == rel:
-                    return (True, besi, self, None)
+                    return (True, besi, self)
             elif typ == "~":
-                besi = x["inh"]["besitzer"]
-        if binIch(besi, self._weak):
-            return (False, besi, self, lambda: self._setzeHier(rel.zuString(), len(self._log)))
-        return (False, besi, self, None)
+                besi = Ort.vonString(x["inh"]["besitzer"])
+        return (False, besi, self)
+    
+
+
+    def __repr__(self):
+        return "HabeBaum(" + self._orts + ")"
+    def besitzvon(self, orts):
+        o = Ort.vonString(orts)
+        return self._find_ownership_information(o, None)
     def _setzeHier(self, relort, lenselflog):
         if len(self._log) != lenselflog:
             raise Exception("The HabeBaum has changed in the meanwhile. Operation is no logner valid")
@@ -79,10 +87,10 @@ class _HabeBaum(Thing):
     def delegiere(self, blick, idort):
         bl = Blick.vonString(orts)
         o = Ort(Blick.weg, Blick.runter)
-        b = self._besitzer(o, len(o.weg) + len(self._blick.weg) + 1)
+        b = self._besitzer(o, len(o.weg) + len(self._address_cone.weg) + 1)
         return b._meinDelegiere(bl, idort) if b else None
     def _meinDelegiere(self, blick, idort):
-        rel = self._blick.aufBlick(blick)
+        rel = self._address_cone.aufBlick(blick)
         if not rel.runter or not rel.fort or len(rel.weg) == 0:
             return False
         self._log.append({"typ":">", "inh":{"fortort" : Ort(rel.weg, rel.runter).zuString(), "gruender" : idort}})

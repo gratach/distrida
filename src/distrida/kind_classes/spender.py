@@ -22,7 +22,7 @@ class Spender(Thing):
         self._nutzblick = Blick.vonString(self._nutzkegel)
         self._besitzer = self._erbschaft[-1]["erbe"] if self._erbschaft else self._gruender
         self.interface("Ssh", {
-            "besitzvon" : self._besitzvon
+            "find_ownership_information" : self._besitzvon
         })
         self.interface("SsKs", {
             "zielart" : lambda : self._zielart,

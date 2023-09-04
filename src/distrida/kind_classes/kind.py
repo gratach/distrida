@@ -20,8 +20,10 @@ class _Kind(Thing):
         self._create_interface(Ort("Ssa"), {
             "get_thing" : self.get_thing
         })
-        self._thing_creator_function  = self._database._hardcoded_kind_class_dict.get(self.address, lambda json, orts, reg: _Unbek(orts, json, reg, self))
+        self._thing_creator_function  = self._database._hardcoded_kind_class_dict.get(self.address)
     def get_thing(self, address):
+        if self._thing_creator_function is None:
+            raise Exception("Things of kind '%s' can not be loaded"%self.address)
         return self._database._get_thing_from_function(address, self._thing_creator_function)
     
 
