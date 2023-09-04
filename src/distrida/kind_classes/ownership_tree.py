@@ -5,6 +5,7 @@ from ..ortreg.finding import finDing
 from ..address_system import Blick, Ort
 from ..ortreg.binich import binIch
 from ..ortreg.verkuerze import verkuerze
+from ..ortreg.prevent_address_search_circles import PreventAddressSearchCircles
 
 class OwnershipTree(Thing):
     kind_address = Ort("ah")
@@ -23,27 +24,27 @@ class OwnershipTree(Thing):
         Finds the ownership information of the given address.
         Returns a tuple of the assignment status, the owner address and the manager.
         - The assignment status is True if the address is allready assigned and False if it is not assigned yet.
-        - When the address is assigned, the owner address is the address of the address owner. Otherwise it is the adress of the managers owner.
-        - The manager is the thing that is responsible for the assignment.
+        - When the address is assigned, the owner address is the address of the address owner. Otherwise it is the address of the managers owner.
+        - The manager is the thing that is responsible for the assignment (or was responsible for the assignment if the address is allready assigned).
         """
-        rel = self._address_cone.aufOrt(address)
-        besi = self._gruender
-        for x in self._log:
-            typ = x["typ"]
-            if typ == ">":
-                xinh = x["inh"]
-                bl = Blick.vonOrt(Ort.vonString(xinh["relort"]), True)
-                if bl.hatOrt(rel):
-                    fd = finDing(xinh["fortort"], self._weak)
-                    if not (fd and fd.impl("Ssh")):
-                        raise Exception("The owner of the address '%s' could not be found"%address)
-                    return fd.s("Ssh").besitzvon(address, neul)
-            elif typ == "!":
-                if Ort(x["inh"]["vollort"]) == rel:
-                    return (True, besi, self)
-            elif typ == "~":
-                besi = Ort.vonString(x["inh"]["besitzer"])
-        return (False, besi, self)
+        with PreventAddressSearchCircles(address, self._address_cone, True) as relative_address:
+            besi = self._gruender
+            for x in self._log:
+                typ = x["typ"]
+                if typ == ">":
+                    xinh = x["inh"]
+                    bl = Blick.vonOrt(Ort.vonString(xinh["relort"]), True)
+                    if bl.hatOrt(relative_address):
+                        fd = finDing(xinh["fortort"], self._weak)
+                        if not (fd and fd.impl("Ssh")):
+                            raise Exception("The owner of the address '%s' could not be found"%address)
+                        return fd.s("Ssh").besitzvon(address)
+                elif typ == "!":
+                    if Ort(x["inh"]["vollort"]) == relative_address:
+                        return (True, besi, self)
+                elif typ == "~":
+                    besi = Ort.vonString(x["inh"]["besitzer"])
+            return (False, besi, self)
     
 
 
