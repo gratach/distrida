@@ -9,6 +9,11 @@ from ..ortreg.aschnitt import ASchnitt
 from ..address_system import Ort, Blick
 from .unbek import _Unbek, _UnbekMach
 
+_hardcoded_kind_class_dict = None
+def _register_hardcoded_kind_classes(hardcoded_kind_classes):
+    global _hardcoded_kind_class_dict 
+    _hardcoded_kind_class_dict = {kind_class.kind_address : kind_class for kind_class in hardcoded_kind_classes}
+
 class _Kind(Thing):
     kind_address = Ort("a")
     def __init__(self, data, format, address, database):
@@ -20,7 +25,7 @@ class _Kind(Thing):
         self._create_interface(Ort("Ssa"), {
             "get_thing" : self.get_thing
         })
-        self._thing_creator_function  = self._database._hardcoded_kind_class_dict.get(self.address)
+        self._thing_creator_function  = _hardcoded_kind_class_dict.get(self.address)
     def get_thing(self, address):
         if self._thing_creator_function is None:
             raise Exception("Things of kind '%s' can not be loaded"%self.address)

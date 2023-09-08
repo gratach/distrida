@@ -3,6 +3,7 @@ import unittest
 
 from src.distrida.address_system import Ort, Blick
 from src.distrida.ortreg import nochfrei, reserviere, Kind, Database, artvon, finDing
+from src.distrida.tools.create_database_seed import create_database_seed
 from json import load, dump
 from sys import argv
 import os
@@ -43,6 +44,8 @@ class DatabaseTest(unittest.TestCase):
         with TemporaryDirectory() as tempdir:
             db = Database(tempdir)
             self.assertRaises(Exception, lambda: db["non_existing"])
+    def test_seed_path_creation(self):
+        database_seed = create_database_seed()
     def test_free(self):
         with TemporaryDirectory() as tempdir:
             db = Database(tempdir)

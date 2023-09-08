@@ -124,9 +124,9 @@ class Ort:
     def __hash__(self):
         return hash((self.weg, self.runter))
     def __str__(self):
-        return "[" +  ("+" if self.runter else "-") + ", '" + bytesZuStr(self.weg) + "']"
+        return self.zuString()
     def __repr__(self):
-        return "Ort" + str(self)
+        return "Address: [" +  ("+" if self.runter else "-") + ", '" + bytesZuStr(self.weg) + "']"
     def __int__(self):
         return self.zuInt()
     def __lt__(self, oth):

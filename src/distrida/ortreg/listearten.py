@@ -5,7 +5,7 @@ from ..kind_classes.kind_tree import ArtBaum
 from ..kind_classes.unbek import Unbek
 from ..kind_classes.gpgpub import GpgPub
 from ..kind_classes.gpgpriv import GpgPriv
-from ..kind_classes.ident import Ident
+from ..kind_classes.identity import Ident
 from ..kind_classes.text import Text
 from ..kind_classes.ortlink import OrtLink
 #from .spender import Spender

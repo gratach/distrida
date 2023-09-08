@@ -4,7 +4,7 @@ from .unbek import _UnbekMach
 from ..ortreg.finding import finDing
 from ..address_system import Ort
 
-class _Ident(Thing):
+class _Identity(Thing):
     kind_address = Ort("ai")
     def _lade(self, json):
         self._log = json["log"]

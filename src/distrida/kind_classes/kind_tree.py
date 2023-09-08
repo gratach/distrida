@@ -6,6 +6,7 @@ from .kind import find_thing_of_kind
 from ..ortreg.verkuerze import verkuerze
 from ..ortreg.prevent_address_search_circles import PreventAddressSearchCircles
 
+root_tree_address = Ort("b")
 
 class _KindTree(Thing):
     kind_address = Ort("ab")

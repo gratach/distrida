@@ -1,5 +1,5 @@
 from yaml import safe_load as yaml_load, safe_dump as yaml_dump
-from json import loads as json_load, dumps as json_dump
+from json import loads as json_load, dumps as json_dump, load as json_load_file, dump as json_dump_file
 from .ortreg.listearten import listearten
 from .address_system import Ort, Blick
 from pathlib import Path
@@ -13,18 +13,22 @@ from .ortreg.setzding import setzDing
 from .ortreg.ansicht import ansicht
 from .ortreg.machding import machDing
 from .ortreg.thing import Thing
-from .kind_classes.kind import _Kind 
+from .kind_classes.kind import _Kind, _register_hardcoded_kind_classes
 from .kind_classes.ownership_tree import OwnershipTree, istFrei
-from .kind_classes.kind_tree import _KindTree 
+from .kind_classes.kind_tree import _KindTree, root_tree_address
 from .kind_classes.unbek import Unbek
 from .kind_classes.gpgpub import _GpgPub
 from .kind_classes.gpgpriv import _GpgPriv
-from .kind_classes.ident import _Ident
+from .kind_classes.identity import _Identity
 from .kind_classes.text import _Text
 from .kind_classes.ortlink import _OrtLink
 from typing import Self, Callable
+
+_hardcoded_kind_classes = [_Kind, OwnershipTree, _KindTree, _GpgPub, _GpgPriv, _Identity, _Text, _OrtLink]
+_register_hardcoded_kind_classes(_hardcoded_kind_classes)
+
 class Database:
-    def __init__(self, folder = None):
+    def __init__(self, folder = None, seed = None):
         # Load general information
         static_data_path = Path(__file__).parent / "static_data"
         general_info_path = static_data_path / "general_info.yaml"
@@ -32,9 +36,6 @@ class Database:
             general_info = yaml_load(f)
         data_pool_name = general_info["data_pool"]
         version = general_info["version"]
-        seed_path = static_data_path / "distrida_database_seed.yaml"
-        with seed_path.open("r") as f:
-            self._reg = yaml_load(f)
         # Find the data pool folder
         if folder == None:
             folder = Path(appdirs.user_data_dir("distrida")) / data_pool_name
@@ -61,10 +62,14 @@ class Database:
         database_new = not database_path.exists()
         self._db = connect(str(database_path))
         if database_new:
+            # Load json seed
+            if seed == None:
+                seed_path = static_data_path / "distrida_database_seed.json"
+                seed = json_load_file(seed_path.open("r"))
             # Create the database schema
             self._db.execute("CREATE TABLE things (id BLOB PRIMARY KEY, raw BLOB, json TEXT)")
             # Insert the seed data
-            for kind_identifyer, thing_dict in self._reg.items():
+            for kind_identifyer, thing_dict in seed.items():
                 for thing_identifyer, thing in thing_dict.items():
                     self._db.execute("INSERT INTO things (id, raw, json) VALUES (?, ?, ?)", (bytes(Ort(thing_identifyer)), None, json_dump(thing, sort_keys=True)))
             self._db.commit()
@@ -72,12 +77,10 @@ class Database:
         self._things = WeakValueDictionary()
         # Load hardcoded kinds
         self._hardcoded_kinds = set()
-        self._hardcoded_kind_class_dict = {}
-        for kind_class in [_Kind, OwnershipTree, _KindTree, _GpgPub, _GpgPriv, _Ident, _Text, _OrtLink]:
-            self._hardcoded_kind_class_dict[kind_class.kind_address] = kind_class
+        for kind_class in _hardcoded_kind_classes:
             self._hardcoded_kinds.add(self._get_thing_from_function(kind_class.kind_address, _Kind))
         # Load root kind tree
-        self._root_kind_tree = self._get_thing_from_function(Ort("b"), _KindTree)
+        self._root_kind_tree = self._get_thing_from_function(root_tree_address, _KindTree)
         #listearten(self)
     def _register_thing(self, thing: _Kind):
         '''
