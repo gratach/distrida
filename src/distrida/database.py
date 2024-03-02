@@ -23,12 +23,15 @@ from .kind_classes.identity import _Identity
 from .kind_classes.text import _Text
 from .kind_classes.ortlink import _OrtLink
 from typing import Self, Callable
+from .ortreg.data_formats import json_format, raw_format
 
 _hardcoded_kind_classes = [_Kind, OwnershipTree, _KindTree, _GpgPub, _GpgPriv, _Identity, _Text, _OrtLink]
 _register_hardcoded_kind_classes(_hardcoded_kind_classes)
 
 class Database:
     def __init__(self, folder = None, seed = None):
+        # Set database settings
+        self._prefered_data_format = json_format
         # Load general information
         static_data_path = Path(__file__).parent / "static_data"
         general_info_path = static_data_path / "general_info.yaml"
@@ -137,7 +140,7 @@ class Database:
         if raw != None:
             return (raw, b"raw")
         elif json != None:
-            return (json_load(json), b"json")
+            return (json_load(json), json_format)
         else:
             raise RuntimeError("Database entry not found")
     def _set_database_entry(self, ort: Ort, data: bytes, format: bytes):
@@ -146,14 +149,21 @@ class Database:
         The format of the data is encoded as bytes (b'json' or b'raw')
         '''
         c = self._db.cursor()
-        if format == b"raw":
+        if format == raw_format:
             c.execute("UPDATE things SET raw = ?, json = NULL WHERE id = ?", (data, bytes(ort)))
-        elif format == b"json":
+        elif format == json_format:
             c.execute("UPDATE things SET raw = NULL, json = ? WHERE id = ?", (json_dump(data, sort_keys=True), bytes(ort)))
         else:
             raise RuntimeError("Unknown data format")
         c.close()
-        
+    def _update_thing_data(self, thing: Thing, data: any, format: bytes):
+        '''
+        Updates the data of a thing
+        The format of the data is encoded as bytes (b'json' or b'raw')
+        '''
+        if format != self._prefered_data_format:
+            data = thing._kind._convert_data_format(data, format, self._prefered_data_format)
+        self._set_database_entry(thing.address, data, self._prefered_data_format)
 
 
 

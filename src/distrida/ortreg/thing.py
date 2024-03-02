@@ -1,5 +1,6 @@
 from .schnitt import Schnitt
 from ..address_system import Ort
+from ..ortreg.data_formats import json_format, raw_format
 
 class Thing:
     def __init__(self, data, format, address, database, kind = None):
@@ -10,7 +11,7 @@ class Thing:
         self._kind._register_thing(self)
         database._register_thing(self)
         if hasattr(self, "_load"):
-            self._load(data if format == b"json" else kind._convert_data_to_json(data, format))
+            self._load(data if format == json_format else self._kind._convert_data_format(data, format, json_format))
     def _create_interface(self, interface_name: Ort, interface: dict[str, object]):
         '''
         Creates an interface
@@ -27,6 +28,8 @@ class Thing:
     def __del__(self):
         self._kind._unregister_thing(self)
         self._database._unregister_thing(self)
+    def _update_json(self, json):
+        self._database._update_thing_data(self, json, json_format)
 """class Thing:
     def __init__(self, json, orts, kind):
         self._orts = orts
